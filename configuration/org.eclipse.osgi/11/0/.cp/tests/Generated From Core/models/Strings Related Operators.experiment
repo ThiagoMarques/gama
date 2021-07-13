@@ -1,0 +1,64 @@
+/**
+ *  Strings Related Operators
+ *  Author: GAMA Automatic Generator
+ *  Description: Unit tests of operators belonging to "Strings Related Operators".
+ */
+
+experiment "Run Tests" type: test {	
+
+	
+		test "char" {
+			string var0 <- char (34); 	// var0 equals '"'
+			assert var0 = '"'; 
+
+		}
+	
+		test "copy_between" {
+			string var0 <- copy_between("abcabcabc", 2,6); 	// var0 equals "cabc"
+			assert var0 = "cabc"; 
+			list var1 <-  copy_between ([4, 1, 6, 9 ,7], 1, 3); 	// var1 equals [1, 6]
+			assert var1 = [1, 6]; 
+
+		}
+	
+		test "indented_by" {
+			string var0 <- "my" + indented_by("text", 1); 	// var0 equals "my	text"
+			assert var0 = "my	text"; 
+
+		}
+	
+		test "lower_case" {
+			string var0 <- lower_case("Abc"); 	// var0 equals 'abc'
+			assert var0 = 'abc'; 
+
+		}
+	
+		test "replace" {
+			string var0 <- replace('to be or not to be,that is the question','to', 'do'); 	// var0 equals 'do be or not do be,that is the question'
+			assert var0 = 'do be or not do be,that is the question'; 
+
+		}
+	
+		test "replace_regex" {
+			string var0 <- replace_regex("colour, color", "colou?r", "col"); 	// var0 equals 'col, col'
+			assert var0 = 'col, col'; 
+
+		}
+	
+		test "split_with" {
+			list var0 <- 'to be or not to be,that is the question' split_with ' ,'; 	// var0 equals ['to','be','or','not','to','be','that','is','the','question']
+			assert var0 = ['to','be','or','not','to','be','that','is','the','question']; 
+			list var1 <- 'aa::bb:cc' split_with ('::', true); 	// var1 equals ['aa','bb:cc']
+			assert var1 = ['aa','bb:cc']; 
+
+		}
+	
+		test "upper_case" {
+			string var0 <- upper_case("Abc"); 	// var0 equals 'ABC'
+			assert var0 = 'ABC'; 
+
+		}
+	
+}
+
+	

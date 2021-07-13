@@ -1,0 +1,12 @@
+#Mac os
+.DS_Store
+
+#Batch
+*/batch_output
+*/beta_output
+
+#Gama
+.project
+
+#github
+.github

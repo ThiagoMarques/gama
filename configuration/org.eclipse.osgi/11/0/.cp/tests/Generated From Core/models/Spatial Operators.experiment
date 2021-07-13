@@ -1,0 +1,213 @@
+/**
+ *  Spatial Operators
+ *  Author: GAMA Automatic Generator
+ *  Description: Unit tests of operators belonging to "Spatial Operators".
+ */
+
+experiment "Run Tests" type: test {	
+
+	
+		test "add_point" {
+			geometry var0 <- polygon([{10,10},{10,20},{20,20}]) add_point {20,10}; 	// var0 equals polygon([{10,10},{10,20},{20,20},{20,10}])
+			assert var0 = polygon([{10,10},{10,20},{20,20},{20,10}]); 
+
+		}
+	
+		test "angle_between" {
+			float var0 <- angle_between({5,5},{10,5},{5,10}); 	// var0 equals 90
+			assert var0 = 90; 
+
+		}
+	
+		test "at_location" {
+			geometry var0 <- self at_location {10, 20}; 	// var0 equals the geometry resulting from a translation to the location {10, 20} of the left-hand geometry (or agent).
+			float var1 <-  (box({10, 10 , 5}) at_location point(50,50,0)).location.x; 	// var1 equals 50.0
+			assert var1 = 50.0; 
+
+		}
+	
+		test "box" {
+			geometry var0 <- box(10, 5 , 5); 	// var0 equals a geometry as a rectangle with width = 10, height = 5 depth= 5.
+			geometry var1 <- box({10, 5 , 5}); 	// var1 equals a geometry as a rectangle with width = 10, height = 5 depth= 5.
+			float var2 <-  (box({10, 10 , 5}) at_location point(50,50,0)).location.y; 	// var2 equals 50.0
+			assert var2 = 50.0; 
+
+		}
+	
+		test "clean_network" {
+			//list<geometry> var0 <- clean_network(my_road_shapefile.contents, 1.0, true, false); 	// var0 equals returns the list of polulines resulting from the cleaning of the geometry of the agent applying the operator with a tolerance of 1m, and splitting the lines at their intersections.
+			list<geometry> var1 <- clean_network([line({10,10}, {20,20}), line({10,20},{20,10})],3.0,true,false); 	// var1 equals [line({10.0,20.0,0.0},{15.0,15.0,0.0}),line({15.0,15.0,0.0},{20.0,10.0,0.0}), line({10.0,10.0,0.0},{15.0,15.0,0.0}), line({15.0,15.0,0.0},{20.0,20.0,0.0})]
+			assert var1 = [line({10.0,20.0,0.0},{15.0,15.0,0.0}),line({15.0,15.0,0.0},{20.0,10.0,0.0}), line({10.0,10.0,0.0},{15.0,15.0,0.0}), line({15.0,15.0,0.0},{20.0,20.0,0.0})]; 
+
+		}
+	
+		test "covers" {
+			bool var0 <- square(5) covers square(2); 	// var0 equals true
+			assert var0 = true; 
+
+		}
+	
+		test "crosses" {
+			bool var0 <- polyline([{10,10},{20,20}]) crosses polyline([{10,20},{20,10}]); 	// var0 equals true
+			assert var0 = true; 
+			bool var1 <- polyline([{10,10},{20,20}]) crosses {15,15}; 	// var1 equals true
+			assert var1 = true; 
+			bool var2 <- polyline([{0,0},{25,25}]) crosses polygon([{10,10},{10,20},{20,20},{20,10}]); 	// var2 equals true
+			assert var2 = true; 
+
+		}
+	
+		test "disjoint_from" {
+			bool var0 <- polyline([{10,10},{20,20}]) disjoint_from polyline([{15,15},{25,25}]); 	// var0 equals false
+			assert var0 = false; 
+			bool var1 <- polygon([{10,10},{10,20},{20,20},{20,10}]) disjoint_from polygon([{15,15},{15,25},{25,25},{25,15}]); 	// var1 equals false
+			assert var1 = false; 
+			bool var2 <- polygon([{10,10},{10,20},{20,20},{20,10}]) disjoint_from {15,15}; 	// var2 equals false
+			assert var2 = false; 
+			bool var3 <- polygon([{10,10},{10,20},{20,20},{20,10}]) disjoint_from {25,25}; 	// var3 equals true
+			assert var3 = true; 
+			bool var4 <- polygon([{10,10},{10,20},{20,20},{20,10}]) disjoint_from polygon([{35,35},{35,45},{45,45},{45,35}]); 	// var4 equals true
+			assert var4 = true; 
+
+		}
+	
+		test "envelope" {
+			//file road_shapefile <- file("../includes/roads.shp");
+			//geometry shape <- envelope(road_shapefile);
+			//// shape is the system variable of  the environment
+			geometry var3 <- polygon([{0,0}, {20,0}, {10,10}, {10,0}]); 	// var3 equals create a polygon to get the envolpe
+			float var4 <- envelope(polygon([{0,0}, {20,0}, {10,10}, {10,0}])).area; 	// var4 equals 200.0
+			assert var4 = 200.0; 
+
+		}
+	
+		test "intersects" {
+			bool var0 <- square(5) intersects {10,10}; 	// var0 equals false
+			assert var0 = false; 
+
+		}
+	
+		test "line" {
+			geometry var3 <- polyline([{0,0}, {0,10}, {10,10}, {10,0}],0.2); 	// var3 equals a polyline geometry composed of the 4 points.
+			geometry var0 <- polyline([{0,0}, {0,10}, {10,10}]); 	// var0 equals a polyline geometry composed of the 3 points.
+			geometry var1 <- line([{10,10}, {10,0}]); 	// var1 equals a line from 2 points.
+			string var2 <- string(polyline([{0,0}, {0,10}, {10,10}])+line([{10,10}, {10,0}])); 	// var2 equals "MULTILINESTRING ((0 0, 0 10, 10 10), (10 10, 10 0))"
+			assert var2 = "MULTILINESTRING ((0 0, 0 10, 10 10), (10 10, 10 0))"; 
+
+		}
+	
+		test "overlaps" {
+			bool var0 <- polyline([{10,10},{20,20}]) overlaps polyline([{15,15},{25,25}]); 	// var0 equals true
+			assert var0 = true; 
+			bool var1 <- polygon([{10,10},{10,20},{20,20},{20,10}]) overlaps polygon([{15,15},{15,25},{25,25},{25,15}]); 	// var1 equals true
+			assert var1 = true; 
+			bool var2 <- polygon([{10,10},{10,20},{20,20},{20,10}]) overlaps {25,25}; 	// var2 equals false
+			assert var2 = false; 
+			bool var3 <- polygon([{10,10},{10,20},{20,20},{20,10}]) overlaps polygon([{35,35},{35,45},{45,45},{45,35}]); 	// var3 equals false
+			assert var3 = false; 
+			bool var4 <- polygon([{10,10},{10,20},{20,20},{20,10}]) overlaps polyline([{10,10},{20,20}]); 	// var4 equals true
+			assert var4 = true; 
+			bool var5 <- polygon([{10,10},{10,20},{20,20},{20,10}]) overlaps {15,15}; 	// var5 equals true
+			assert var5 = true; 
+			bool var6 <- polygon([{10,10},{10,20},{20,20},{20,10}]) overlaps polygon([{0,0},{0,30},{30,30}, {30,0}]); 	// var6 equals true
+			assert var6 = true; 
+			bool var7 <- polygon([{10,10},{10,20},{20,20},{20,10}]) overlaps polygon([{15,15},{15,25},{25,25},{25,15}]); 	// var7 equals true
+			assert var7 = true; 
+			bool var8 <- polygon([{10,10},{10,20},{20,20},{20,10}]) overlaps polygon([{10,20},{20,20},{20,30},{10,30}]); 	// var8 equals true
+			assert var8 = true; 
+
+		}
+	
+		test "partially_overlaps" {
+			bool var0 <- polyline([{10,10},{20,20}]) partially_overlaps polyline([{15,15},{25,25}]); 	// var0 equals true
+			assert var0 = true; 
+			bool var1 <- polygon([{10,10},{10,20},{20,20},{20,10}]) partially_overlaps polygon([{15,15},{15,25},{25,25},{25,15}]); 	// var1 equals true
+			assert var1 = true; 
+			bool var2 <- polygon([{10,10},{10,20},{20,20},{20,10}]) partially_overlaps {25,25}; 	// var2 equals false
+			assert var2 = false; 
+			bool var3 <- polygon([{10,10},{10,20},{20,20},{20,10}]) partially_overlaps polygon([{35,35},{35,45},{45,45},{45,35}]); 	// var3 equals false
+			assert var3 = false; 
+			bool var4 <- polygon([{10,10},{10,20},{20,20},{20,10}]) partially_overlaps polyline([{10,10},{20,20}]); 	// var4 equals false
+			assert var4 = false; 
+			bool var5 <- polygon([{10,10},{10,20},{20,20},{20,10}]) partially_overlaps {15,15}; 	// var5 equals false
+			assert var5 = false; 
+			bool var6 <- polygon([{10,10},{10,20},{20,20},{20,10}]) partially_overlaps polygon([{0,0},{0,30},{30,30}, {30,0}]); 	// var6 equals false
+			assert var6 = false; 
+			bool var7 <- polygon([{10,10},{10,20},{20,20},{20,10}]) partially_overlaps polygon([{15,15},{15,25},{25,25},{25,15}]); 	// var7 equals true
+			assert var7 = true; 
+			bool var8 <- polygon([{10,10},{10,20},{20,20},{20,10}]) partially_overlaps polygon([{10,20},{20,20},{20,30},{10,30}]); 	// var8 equals false
+			assert var8 = false; 
+
+		}
+	
+		test "polygon" {
+			geometry var0 <- polygon([{0,0}, {0,10}, {10,10}, {10,0}]); 	// var0 equals a polygon geometry composed of the 4 points.
+			float var1 <- polygon([{0,0}, {0,10}, {10,10}, {10,0}]).area; 	// var1 equals 100.0
+			assert var1 = 100.0; 
+			point var2 <- polygon([{0,0}, {0,10}, {10,10}, {10,0}]).location; 	// var2 equals point(5.0,5.0,0.0)
+			assert var2 = point(5.0,5.0,0.0); 
+
+		}
+	
+		test "rectangle" {
+			geometry var0 <- rectangle(10, 5); 	// var0 equals a geometry as a rectangle with width = 10 and height = 5.
+			float var1 <- rectangle(10, 5).area; 	// var1 equals 50.0
+			assert var1 = 50.0; 
+			geometry var2 <- rectangle({10, 5}); 	// var2 equals a geometry as a rectangle with width = 10 and height = 5.
+			float var3 <- rectangle({10, 5}).area; 	// var3 equals 50.0
+			assert var3 = 50.0; 
+			geometry var4 <- rectangle({0.0,0.0}, {10.0,10.0}); 	// var4 equals a geometry as a rectangle with {1.0,1.0} as the upper-left corner, {10.0,10.0} as the lower-right corner.
+			float var5 <- rectangle({0.0,0.0}, {10.0,10.0}).area; 	// var5 equals 100.0
+			assert var5 = 100.0; 
+
+		}
+	
+		test "split_at" {
+			list<geometry> var0 <- polyline([{1,2},{4,6}]) split_at {7,6}; 	// var0 equals [polyline([{1.0,2.0},{7.0,6.0}]), polyline([{7.0,6.0},{4.0,6.0}])]
+			assert var0 = [polyline([{1.0,2.0},{7.0,6.0}]), polyline([{7.0,6.0},{4.0,6.0}])]; 
+
+		}
+	
+		test "square" {
+			geometry var0 <- square(10); 	// var0 equals a geometry as a square of side size 10.
+			float var1 <- var0.area; 	// var1 equals 100.0
+			assert var1 = 100.0; 
+
+		}
+	
+		test "touches" {
+			bool var0 <- polyline([{10,10},{20,20}]) touches {15,15}; 	// var0 equals false
+			assert var0 = false; 
+			bool var1 <- polyline([{10,10},{20,20}]) touches {10,10}; 	// var1 equals true
+			assert var1 = true; 
+			bool var2 <- {15,15} touches {15,15}; 	// var2 equals false
+			assert var2 = false; 
+			bool var3 <- polyline([{10,10},{20,20}]) touches polyline([{10,10},{5,5}]); 	// var3 equals true
+			assert var3 = true; 
+			bool var4 <- polyline([{10,10},{20,20}]) touches polyline([{5,5},{15,15}]); 	// var4 equals false
+			assert var4 = false; 
+			bool var5 <- polyline([{10,10},{20,20}]) touches polyline([{15,15},{25,25}]); 	// var5 equals false
+			assert var5 = false; 
+			bool var6 <- polygon([{10,10},{10,20},{20,20},{20,10}]) touches polygon([{15,15},{15,25},{25,25},{25,15}]); 	// var6 equals false
+			assert var6 = false; 
+			bool var7 <- polygon([{10,10},{10,20},{20,20},{20,10}]) touches polygon([{10,20},{20,20},{20,30},{10,30}]); 	// var7 equals true
+			assert var7 = true; 
+			bool var8 <- polygon([{10,10},{10,20},{20,20},{20,10}]) touches polygon([{10,10},{0,10},{0,0},{10,0}]); 	// var8 equals true
+			assert var8 = true; 
+			bool var9 <- polygon([{10,10},{10,20},{20,20},{20,10}]) touches {15,15}; 	// var9 equals false
+			assert var9 = false; 
+			bool var10 <- polygon([{10,10},{10,20},{20,20},{20,10}]) touches {10,15}; 	// var10 equals true
+			assert var10 = true; 
+
+		}
+	
+		test "without_holes" {
+			geometry var0 <- solid(self); 	// var0 equals the geometry corresponding to the geometry of the agent applying the operator without its holes.
+			float var1 <- without_holes(polygon([{0,50}, {0,0}, {50,0}, {50,50}, {0,50}]) - square(10) at_location {10,10}).area; 	// var1 equals 2500.0
+			assert var1 = 2500.0; 
+
+		}
+	
+}
+
+	

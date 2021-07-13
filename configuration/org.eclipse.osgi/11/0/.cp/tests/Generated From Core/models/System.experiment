@@ -1,0 +1,31 @@
+/**
+ *  System
+ *  Author: GAMA Automatic Generator
+ *  Description: Unit tests of operators belonging to "System".
+ */
+
+experiment "Run Tests" type: test {	
+
+	
+		test "copy_to_clipboard" {
+			bool copied  <- copy_to_clipboard('text to copy');
+
+		}
+	
+		test "eval_gaml" {
+			unknown var0 <- eval_gaml("2+3"); 	// var0 equals 5
+			assert var0 = 5; 
+
+		}
+	
+		test "user_input" {
+			map<string,unknown> values2 <- user_input('Enter number of agents and locations',[enter('Number',100), enter('Location',point, {10, 10})]);
+			//create bug number: int(values2 at "Number") with: [location:: (point(values2 at "Location"))];
+			map<string,unknown> values_no_title <- user_input([enter('Number',100), enter('Location',point, {10, 10})]);
+			//create bug number: int(values2 at "Number") with: [location:: (point(values2 at "Location"))];
+
+		}
+	
+}
+
+	

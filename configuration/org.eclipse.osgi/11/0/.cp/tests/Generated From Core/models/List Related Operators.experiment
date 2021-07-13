@@ -1,0 +1,20 @@
+/**
+ *  List Related Operators
+ *  Author: GAMA Automatic Generator
+ *  Description: Unit tests of operators belonging to "List Related Operators".
+ */
+
+experiment "Run Tests" type: test {	
+
+	
+		test "all_indexes_of" {
+			list var0 <- [1,2,3,1,2,3] all_indexes_of 1; 	// var0 equals [0,3]
+			assert var0 = [0,3]; 
+			list var1 <- [1,2,3,1,2,3] all_indexes_of 4; 	// var1 equals []
+			assert var1 = []; 
+
+		}
+	
+}
+
+	

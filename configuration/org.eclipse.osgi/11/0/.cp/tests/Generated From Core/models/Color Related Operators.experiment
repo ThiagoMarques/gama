@@ -1,0 +1,51 @@
+/**
+ *  Color Related Operators
+ *  Author: GAMA Automatic Generator
+ *  Description: Unit tests of operators belonging to "Color Related Operators".
+ */
+
+experiment "Run Tests" type: test {	
+
+	
+		test "blend" {
+			rgb var0 <- blend(#red, #blue); 	// var0 equals rgb(127,0,127)
+			assert var0 = rgb(127,0,127); 
+			//rgb var1 <- blend(#red, #blue); 	// var1 equals to a color very close to the purple
+			rgb var2 <- blend(#red, #blue, 0.3); 	// var2 equals rgb(76,0,178)
+			assert var2 = rgb(76,0,178); 
+			//rgb var3 <- blend(#red, #blue, 0.3); 	// var3 equals to a color between the purple and the blue
+
+		}
+	
+		test "grayscale" {
+			//rgb var0 <- grayscale (rgb(255,0,0)); 	// var0 equals to a dark grey
+			rgb var1 <- grayscale (rgb(255,0,0)); 	// var1 equals rgb(76,76,76)
+			assert var1 = rgb(76,76,76); 
+
+		}
+	
+		test "hsb" {
+			rgb var0 <- hsb (0.5,1.0,1.0,0.0); 	// var0 equals rgb("cyan",0)
+			assert var0 = rgb("cyan",0); 
+			rgb var1 <- hsb (0.0,1.0,1.0); 	// var1 equals rgb("red")
+			assert var1 = rgb("red"); 
+
+		}
+	
+		test "rgb" {
+			rgb var0 <- rgb (255,0,0); 	// var0 equals #red
+			assert var0 = #red; 
+			rgb var1 <- rgb (255,0,0,0.5); 	// var1 equals a light red color
+			rgb var2 <- rgb(rgb(255,0,0),125); 	// var2 equals a light red color
+			rgb var3 <- rgb(rgb(255,0,0),0.5); 	// var3 equals a light red color
+			rgb var4 <- rgb (255,0,0,125); 	// var4 equals a light red color
+			int var5 <- rgb (255,0,0,125).alpha; 	// var5 equals 125
+			assert var5 = 125; 
+			rgb var6 <- rgb ("red"); 	// var6 equals rgb(255,0,0)
+			assert var6 = rgb(255,0,0); 
+
+		}
+	
+}
+
+	

@@ -1,0 +1,382 @@
+/**
+ *  Containers Related Operators
+ *  Author: GAMA Automatic Generator
+ *  Description: Unit tests of operators belonging to "Containers Related Operators".
+ */
+
+experiment "Run Tests" type: test {	
+
+	
+		test "at" {
+			int var1 <- [1, 2, 3] at 2; 	// var1 equals 3
+			assert var1 = 3; 
+			point var2 <- [{1,2}, {3,4}, {5,6}] at 0; 	// var2 equals {1.0,2.0}
+			assert var2 = {1.0,2.0}; 
+			string var0 <- 'abcdef' at 0; 	// var0 equals 'a'
+			assert var0 = 'a'; 
+
+		}
+	
+		test "contains" {
+			bool var0 <- [1, 2, 3] contains 2; 	// var0 equals true
+			assert var0 = true; 
+			bool var1 <- [{1,2}, {3,4}, {5,6}] contains {3,4}; 	// var1 equals true
+			assert var1 = true; 
+			bool var2 <- 'abcded' contains 'bc'; 	// var2 equals true
+			assert var2 = true; 
+
+		}
+	
+		test "contains_all" {
+			bool var0 <- "abcabcabc" contains_all ["ca","xy"]; 	// var0 equals false
+			assert var0 = false; 
+			bool var1 <- [1,2,3,4,5,6] contains_all [2,4]; 	// var1 equals true 
+			assert var1 = true ; 
+			bool var2 <- [1,2,3,4,5,6] contains_all [2,8]; 	// var2 equals false
+			assert var2 = false; 
+			bool var3 <- [1::2, 3::4, 5::6] contains_all [1,3]; 	// var3 equals false 
+			assert var3 = false ; 
+			bool var4 <- [1::2, 3::4, 5::6] contains_all [2,4]; 	// var4 equals true
+			assert var4 = true; 
+
+		}
+	
+		test "contains_any" {
+			bool var0 <- [1,2,3,4,5,6] contains_any [2,4]; 	// var0 equals true 
+			assert var0 = true ; 
+			bool var1 <- [1,2,3,4,5,6] contains_any [2,8]; 	// var1 equals true
+			assert var1 = true; 
+			bool var2 <- [1::2, 3::4, 5::6] contains_any [1,3]; 	// var2 equals false
+			assert var2 = false; 
+			bool var3 <- [1::2, 3::4, 5::6] contains_any [2,4]; 	// var3 equals true
+			assert var3 = true; 
+			bool var4 <- "abcabcabc" contains_any ["ca","xy"]; 	// var4 equals true
+			assert var4 = true; 
+
+		}
+	
+		test "contains_key" {
+			bool var0 <- [1, 2, 3] contains_key 3; 	// var0 equals false
+			assert var0 = false; 
+			bool var1 <- [{1,2}, {3,4}, {5,6}] contains_key 0; 	// var1 equals true
+			assert var1 = true; 
+
+		}
+	
+		test "distinct" {
+			list var1 <- remove_duplicates([]); 	// var1 equals []
+			assert var1 = []; 
+			list var2 <- remove_duplicates([1::3,2::4,3::3,5::7]); 	// var2 equals [3,4,7]
+			assert var2 = [3,4,7]; 
+			list var3 <- remove_duplicates([["c11","c12","c13","c13"],["c21","c22","c23","c23"]]); 	// var3 equals [["c11","c12","c13","c21","c22","c23"]]
+			list var0 <- remove_duplicates([3,2,5,1,2,3,5,5,5]); 	// var0 equals [3,2,5,1]
+			assert var0 = [3,2,5,1]; 
+
+		}
+	
+		test "empty" {
+			bool var0 <- empty([]); 	// var0 equals true
+			assert var0 = true; 
+			bool var1 <- empty ('abced'); 	// var1 equals false
+			assert var1 = false; 
+
+		}
+	
+		test "first" {
+			int var0 <- first ([1, 2, 3]); 	// var0 equals 1
+			assert var0 = 1; 
+			string var1 <- first ('abce'); 	// var1 equals 'a'
+			assert var1 = 'a'; 
+
+		}
+	
+		test "in" {
+			bool var0 <-  'bc' in 'abcded'; 	// var0 equals true
+			assert var0 = true; 
+			bool var1 <- 2 in [1,2,3,4,5,6]; 	// var1 equals true
+			assert var1 = true; 
+			bool var2 <- 7 in [1,2,3,4,5,6]; 	// var2 equals false
+			assert var2 = false; 
+			bool var3 <- 3 in [1::2, 3::4, 5::6]; 	// var3 equals false
+			assert var3 = false; 
+			bool var4 <- 6 in [1::2, 3::4, 5::6]; 	// var4 equals true
+			assert var4 = true; 
+
+		}
+	
+		test "inter" {
+			list var3 <- [1::2, 3::4, 5::6] inter [2,4]; 	// var3 equals [2,4]
+			assert var3 = [2,4]; 
+			list var4 <- [1::2, 3::4, 5::6] inter [1,3]; 	// var4 equals []
+			assert var4 = []; 
+			list var5 <- matrix([[3,2,1],[4,5,4]]) inter [3,4]; 	// var5 equals [3,4]
+			assert var5 = [3,4]; 
+			geometry var0 <- square(10) inter circle(5); 	// var0 equals circle(5)
+			assert var0 = circle(5); 
+			list var1 <- [1,2,3,4,5,6] inter [2,4]; 	// var1 equals [2,4]
+			assert var1 = [2,4]; 
+			list var2 <- [1,2,3,4,5,6] inter [0,8]; 	// var2 equals []
+			assert var2 = []; 
+
+		}
+	
+		test "interleave" {
+			list var0 <- interleave([1,2,4,3,5,7,6,8]); 	// var0 equals [1,2,4,3,5,7,6,8]
+			assert var0 = [1,2,4,3,5,7,6,8]; 
+			list var1 <- interleave([['e11','e12','e13'],['e21','e22','e23'],['e31','e32','e33']]); 	// var1 equals ['e11','e21','e31','e12','e22','e32','e13','e23','e33']
+			assert var1 = ['e11','e21','e31','e12','e22','e32','e13','e23','e33']; 
+
+		}
+	
+		test "last" {
+			string var0 <- last ('abce'); 	// var0 equals 'e'
+			assert var0 = 'e'; 
+			int var1 <- last ([1, 2, 3]); 	// var1 equals 3
+			assert var1 = 3; 
+
+		}
+	
+		test "length" {
+			int var0 <- length ('I am an agent'); 	// var0 equals 13
+			assert var0 = 13; 
+			int var1 <- length([12,13]); 	// var1 equals 2
+			assert var1 = 2; 
+			int var2 <- length([]); 	// var2 equals 0
+			assert var2 = 0; 
+			int var3 <- length(matrix([["c11","c12","c13"],["c21","c22","c23"]])); 	// var3 equals 6
+			assert var3 = 6; 
+
+		}
+	
+		test "max" {
+			unknown var0 <- max ([100, 23.2, 34.5]); 	// var0 equals 100.0
+			assert var0 = 100.0; 
+			unknown var1 <- max([{1.0,3.0},{3.0,5.0},{9.0,1.0},{7.0,8.0}]); 	// var1 equals {9.0,1.0}
+			assert var1 = {9.0,1.0}; 
+
+		}
+	
+		test "mean" {
+			unknown var0 <- mean ([4.5, 3.5, 5.5, 7.0]); 	// var0 equals 5.125 
+			assert var0 = 5.125 ; 
+
+		}
+	
+		test "median" {
+			unknown var0 <- median ([4.5, 3.5, 5.5, 3.4, 7.0]); 	// var0 equals 4.5
+			assert var0 = 4.5; 
+
+		}
+	
+		test "min" {
+			unknown var0 <- min ([100, 23.2, 34.5]); 	// var0 equals 23.2
+			assert var0 = 23.2; 
+
+		}
+	
+		test "Minus" {
+			list<int> var18 <- [1,2,3,4,5,6,2] - 2; 	// var18 equals [1,3,4,5,6,2]
+			assert var18 = [1,3,4,5,6,2]; 
+			list<int> var19 <- [1,2,3,4,5,6] - 0; 	// var19 equals [1,2,3,4,5,6]
+			assert var19 = [1,2,3,4,5,6]; 
+			date var20 <- date('2000-01-01') - 86400; 	// var20 equals date('1999-12-31')
+			assert var20 = date('1999-12-31'); 
+			geometry var21 <- shape - 5; 	// var21 equals a geometry corresponding to the geometry of the agent applying the operator reduced by a distance of 5
+			int var22 <- 1 - 1; 	// var22 equals 0
+			assert var22 = 0; 
+			//geometry var23 <- geom1 - geom2; 	// var23 equals a geometry corresponding to difference between geom1 and geom2
+			geometry var24 <- rectangle(10,10) - [circle(2), square(2)]; 	// var24 equals rectangle(10,10) - (circle(2) + square(2))
+			assert var24 = rectangle(10,10) - (circle(2) + square(2)); 
+			rgb var25 <- rgb([255, 128, 32]) - 3; 	// var25 equals rgb([252,125,29])
+			assert var25 = rgb([252,125,29]); 
+			list<int> var26 <- [1,2,3,4,5,6] - [2,4,9]; 	// var26 equals [1,3,5,6]
+			assert var26 = [1,3,5,6]; 
+			list<int> var27 <- [1,2,3,4,5,6] - [0,8]; 	// var27 equals [1,2,3,4,5,6]
+			assert var27 = [1,2,3,4,5,6]; 
+			point var28 <- {1, 2} - 4.5; 	// var28 equals {-3.5, -2.5, -4.5}
+			assert var28 = {-3.5, -2.5, -4.5}; 
+			point var29 <- {1, 2} - 4; 	// var29 equals {-3.0,-2.0,-4.0}
+			assert var29 = {-3.0,-2.0,-4.0}; 
+			rgb var30 <- rgb([255, 128, 32]) - rgb('red'); 	// var30 equals rgb([0,128,32])
+			assert var30 = rgb([0,128,32]); 
+			float var31 <- date('2000-01-02') - date('2000-01-01'); 	// var31 equals 86400
+			assert var31 = 86400; 
+			matrix var32 <- 3.5 - matrix([[2,5],[3,4]]); 	// var32 equals matrix([[1.5,-1.5],[0.5,-0.5]])
+			assert var32 = matrix([[1.5,-1.5],[0.5,-0.5]]); 
+			point var33 <- {1, 2} - {4, 5}; 	// var33 equals {-3.0, -3.0}
+			assert var33 = {-3.0, -3.0}; 
+			point var0 <- {2.0,3.0,4.0} - 1; 	// var0 equals {1.0,2.0,3.0}
+			assert var0 = {1.0,2.0,3.0}; 
+			map var1 <- ['a'::1,'b'::2] - ['b'::2]; 	// var1 equals ['a'::1]
+			assert var1 = ['a'::1]; 
+			map var2 <- ['a'::1,'b'::2] - ['b'::2,'c'::3]; 	// var2 equals ['a'::1]
+			assert var2 = ['a'::1]; 
+			float var3 <- 1.0 - 1.0; 	// var3 equals 0.0
+			assert var3 = 0.0; 
+			float var4 <- 3.7 - 1.2; 	// var4 equals 2.5
+			assert var4 = 2.5; 
+			float var5 <- 3.0 - 1.2; 	// var5 equals 1.8
+			assert var5 = 1.8; 
+			float var6 <- 1.0 - 1; 	// var6 equals 0.0
+			assert var6 = 0.0; 
+			float var7 <- 3.7 - 1; 	// var7 equals 2.7
+			assert var7 = 2.7; 
+			float var8 <- 3.0 - 1; 	// var8 equals 2.0
+			assert var8 = 2.0; 
+			point var9 <- -{3.0,5.0}; 	// var9 equals {-3.0,-5.0}
+			assert var9 = {-3.0,-5.0}; 
+			point var10 <- -{1.0,6.0,7.0}; 	// var10 equals {-1.0,-6.0,-7.0}
+			assert var10 = {-1.0,-6.0,-7.0}; 
+			date var11 <- date('2000-01-01') - 86400; 	// var11 equals date('1999-12-31')
+			assert var11 = date('1999-12-31'); 
+			matrix var12 <- (10.0 - (3.0 as_matrix({2,3}))); 	// var12 equals matrix([[7.0,7.0,7.0],[7.0,7.0,7.0]])
+			assert var12 = matrix([[7.0,7.0,7.0],[7.0,7.0,7.0]]); 
+			map var13 <- ['a'::1,'b'::2] - ('b'::2); 	// var13 equals ['a'::1]
+			assert var13 = ['a'::1]; 
+			map var14 <- ['a'::1,'b'::2] - ('c'::3); 	// var14 equals ['a'::1,'b'::2]
+			assert var14 = ['a'::1,'b'::2]; 
+			int var15 <- - (-56); 	// var15 equals 56
+			assert var15 = 56; 
+			float var16 <- 1 - 1.0; 	// var16 equals 0.0
+			assert var16 = 0.0; 
+			float var17 <- 3 - 1.2; 	// var17 equals 1.8
+			assert var17 = 1.8; 
+
+		}
+	
+		test "mul" {
+			unknown var0 <- mul ([100, 23.2, 34.5]); 	// var0 equals 80040.0
+			assert var0 = 80040.0; 
+
+		}
+	
+		test "one_of" {
+			unknown var0 <- one_of([]); 	// var0 equals nil
+			assert var0 = nil; 
+			int i <- any ([1,2,3]); 	// i equals 1, 2 or 3
+			bool var2 <- [1,2,3] contains i; 	// var2 equals true
+			assert var2 = true; 
+			string sMat <- one_of(matrix([["c11","c12","c13"],["c21","c22","c23"]])); 	// sMat equals "c11","c12","c13", "c21","c22" or "c23"
+			bool var4 <- matrix([["c11","c12","c13"],["c21","c22","c23"]]) contains sMat; 	// var4 equals true
+			assert var4 = true; 
+			int im <- one_of ([2::3, 4::5, 6::7]);	// im equals 3, 5 or 7
+			bool var6 <- [2::3, 4::5, 6::7].values contains im; 	// var6 equals true
+			assert var6 = true; 
+			agent b <- one_of(agents);
+			//bug b <- one_of(bug);  	// Given a previously defined species bug, b is one of the created bugs, e.g. bug3
+
+		}
+	
+		test "Plus" {
+			geometry var9 <- circle(5) + (5,32,#round); 	// var9 equals circle(10)
+			list<int> var10 <- [1,2,3,4,5,6] + 2; 	// var10 equals [1,2,3,4,5,6,2]
+			assert var10 = [1,2,3,4,5,6,2]; 
+			list<int> var11 <- [1,2,3,4,5,6] + 0; 	// var11 equals [1,2,3,4,5,6,0]
+			assert var11 = [1,2,3,4,5,6,0]; 
+			geometry var12 <- circle(5) + (5,32); 	// var12 equals circle(10)
+			rgb var13 <- rgb([255, 128, 32]) + 3; 	// var13 equals rgb([255,131,35])
+			assert var13 = rgb([255,131,35]); 
+			point var14 <- {1, 2} + {4, 5}; 	// var14 equals {5.0, 7.0}
+			assert var14 = {5.0, 7.0}; 
+			list<int> var15 <- [1,2,3,4,5,6] + [2,4,9]; 	// var15 equals [1,2,3,4,5,6,2,4,9]
+			assert var15 = [1,2,3,4,5,6,2,4,9]; 
+			list<int> var16 <- [1,2,3,4,5,6] + [0,8]; 	// var16 equals [1,2,3,4,5,6,0,8]
+			assert var16 = [1,2,3,4,5,6,0,8]; 
+			date var17 <- date('2000-01-01') + 86400; 	// var17 equals date('2000-01-02')
+			assert var17 = date('2000-01-02'); 
+			matrix var18 <- 3.5 + matrix([[2,5],[3,4]]); 	// var18 equals matrix([[5.5,8.5],[6.5,7.5]])
+			assert var18 = matrix([[5.5,8.5],[6.5,7.5]]); 
+			string var19 <- "hello " + 12; 	// var19 equals "hello 12"
+			assert var19 = "hello 12"; 
+			rgb var20 <- rgb([255, 128, 32]) + rgb('red'); 	// var20 equals rgb([255,128,32])
+			assert var20 = rgb([255,128,32]); 
+			int var21 <- 1 + 1; 	// var21 equals 2
+			assert var21 = 2; 
+			geometry var22 <- circle(5) + 5; 	// var22 equals circle(10)
+			string var23 <- "hello " + "World"; 	// var23 equals "hello World"
+			assert var23 = "hello World"; 
+			point var24 <- {1, 2} + 4.5; 	// var24 equals {5.5, 6.5,4.5}
+			assert var24 = {5.5, 6.5,4.5}; 
+			//geometry var25 <- geom1 + geom2; 	// var25 equals a geometry corresponding to union between geom1 and geom2
+			point var0 <- {1, 2} + 4; 	// var0 equals {5.0, 6.0,4.0}
+			assert var0 = {5.0, 6.0,4.0}; 
+			map var1 <- ['a'::1,'b'::2] + ('c'::3); 	// var1 equals ['a'::1,'b'::2,'c'::3]
+			assert var1 = ['a'::1,'b'::2,'c'::3]; 
+			map var2 <- ['a'::1,'b'::2] + ('c'::3); 	// var2 equals ['a'::1,'b'::2,'c'::3]
+			assert var2 = ['a'::1,'b'::2,'c'::3]; 
+			map var3 <- ['a'::1,'b'::2] + ['c'::3]; 	// var3 equals ['a'::1,'b'::2,'c'::3]
+			assert var3 = ['a'::1,'b'::2,'c'::3]; 
+			map var4 <- ['a'::1,'b'::2] + [5::3.0]; 	// var4 equals ['a'::1,'b'::2,5::3.0]
+			assert var4 = ['a'::1,'b'::2,5::3.0]; 
+			date var5 <- date('2016-01-01 00:00:01') + 86400; 	// var5 equals date('2016-01-02 00:00:01')
+			assert var5 = date('2016-01-02 00:00:01'); 
+			string var6 <- date('2000-01-01 00:00:00') + '_Test'; 	// var6 equals '2000-01-01 00:00:00_Test'
+			assert var6 = '2000-01-01 00:00:00_Test'; 
+			float var7 <- 1.0 + 1; 	// var7 equals 2.0
+			assert var7 = 2.0; 
+			float var8 <- 1.0 + 2.5; 	// var8 equals 3.5
+			assert var8 = 3.5; 
+
+		}
+	
+		test "range" {
+			list var0 <- range(0,2); 	// var0 equals [0,1,2]
+			assert var0 = [0,1,2]; 
+
+		}
+	
+		test "reverse" {
+			list<int> var2 <- reverse ([10,12,14]); 	// var2 equals [14, 12, 10]
+			assert var2 = [14, 12, 10]; 
+			map<int,string> var3 <- reverse (['k1'::44, 'k2'::32, 'k3'::12]); 	// var3 equals [44::'k1', 32::'k2', 12::'k3']
+			assert var3 = [44::'k1', 32::'k2', 12::'k3']; 
+			matrix<string> var4 <- reverse(matrix([["c11","c12","c13"],["c21","c22","c23"]])); 	// var4 equals matrix([["c11","c21"],["c12","c22"],["c13","c23"]])
+			assert var4 = matrix([["c11","c21"],["c12","c22"],["c13","c23"]]); 
+			string var5 <- reverse ('abcd'); 	// var5 equals 'dcba'
+			assert var5 = 'dcba'; 
+			map<int,int> m <- [1::111,2::222, 3::333, 4::444];
+			map var1 <- reverse(m); 	// var1 equals map([111::1,222::2,333::3,444::4])
+			assert var1 = map([111::1,222::2,333::3,444::4]); 
+
+		}
+	
+		test "split" {
+			list<list<unknown>> var0 <- split([1.0,2.0,1.0,3.0,1.0,2.0]); 	// var0 equals [[1.0,1.0,1.0],[2.0,2.0],[3.0]]
+			assert var0 = [[1.0,1.0,1.0],[2.0,2.0],[3.0]]; 
+
+		}
+	
+		test "split_in" {
+			list<float> l <- [1.0,3.1,5.2,6.0,9.2,11.1,12.0,13.0,19.9,35.9,40.0];
+			list<list<unknown>> var1 <- split_in(l,3, true); 	// var1 equals [[1.0,3.1,5.2,6.0,9.2,11.1,12.0,13.0],[19.9],[35.9,40.0]]
+			assert var1 = [[1.0,3.1,5.2,6.0,9.2,11.1,12.0,13.0],[19.9],[35.9,40.0]]; 
+			list<float> li <- [1.0,3.1,5.2,6.0,9.2,11.1,12.0,13.0,19.9,35.9,40.0];
+			list<list<unknown>> var3 <- split_in(li,3); 	// var3 equals [[1.0,3.1,5.2,6.0,9.2,11.1,12.0,13.0],[19.9],[35.9,40.0]]
+			assert var3 = [[1.0,3.1,5.2,6.0,9.2,11.1,12.0,13.0],[19.9],[35.9,40.0]]; 
+
+		}
+	
+		test "split_using" {
+			list<float> l <- [1.0,3.1,5.2,6.0,9.2,11.1,12.0,13.0,19.9,35.9,40.0];
+			list<list<unknown>> var1 <- split_using(l,[1.0,3.0,4.2], true); 	// var1 equals [[],[1.0],[3.1],[5.2,6.0,9.2,11.1,12.0,13.0,19.9,35.9,40.0]]
+			assert var1 = [[],[1.0],[3.1],[5.2,6.0,9.2,11.1,12.0,13.0,19.9,35.9,40.0]]; 
+			list<float> li <- [1.0,3.1,5.2,6.0,9.2,11.1,12.0,13.0,19.9,35.9,40.0];
+			list<list<unknown>> var3 <- split_using(li,[1.0,3.0,4.2]); 	// var3 equals [[],[1.0],[3.1],[5.2,6.0,9.2,11.1,12.0,13.0,19.9,35.9,40.0]]
+			assert var3 = [[],[1.0],[3.1],[5.2,6.0,9.2,11.1,12.0,13.0,19.9,35.9,40.0]]; 
+
+		}
+	
+		test "union" {
+			list var0 <- [1,2,3,4,5,6] union [2,4,9]; 	// var0 equals [1,2,3,4,5,6,9]
+			assert var0 = [1,2,3,4,5,6,9]; 
+			list var1 <- [1,2,3,4,5,6] union [0,8]; 	// var1 equals [1,2,3,4,5,6,0,8]
+			assert var1 = [1,2,3,4,5,6,0,8]; 
+			list var2 <- [1,3,2,4,5,6,8,5,6] union [0,8]; 	// var2 equals [1,3,2,4,5,6,8,0]
+			assert var2 = [1,3,2,4,5,6,8,0]; 
+			//geometry var3 <- union([geom1, geom2, geom3]); 	// var3 equals a geometry corresponding to union between geom1, geom2 and geom3
+
+		}
+	
+}
+
+	
