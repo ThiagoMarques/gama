@@ -44,9 +44,9 @@ global {
 	
 	//simulation step
 	float step<-1#h;
-	date starting_date <- date([2020,6,23]);
+	date starting_date <- date([2021,5,1]);
 	
-	int num_infected_init <- 1; //number of infected individuals at the initialization of the simulation
+	int num_infected_init <- 8; //number of infected individuals at the initialization of the simulation
 	int num_recovered_init <- 0; //The number of people that have already been infected in the past
 
 	//Epidemiological parameters
@@ -68,7 +68,7 @@ global {
 	float reduction_coeff_all_buildings_inhabitants <- 0.01; //reduction of the contact rate for individuals belonging to different households leaving in the same building
 	float reduction_coeff_all_buildings_individuals <- 0.05; //reduction of the contact rate for individuals belonging to different households leaving in the same building
 	float basic_viral_release <- 3.0; //Viral load released in the environment by infectious individual
-	float basic_viral_decrease <- 0.70; //Value to decrement the viral load in the environment
+	float basic_viral_decrease <- 0.33; //Value to decrement the viral load in the environment
 	
 	
 	//These parameters are used when no CSV is loaded to build the matrix of parameters per age
